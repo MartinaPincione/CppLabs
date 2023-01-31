@@ -36,11 +36,14 @@ int generate_correct_fisher_loop(int nums[], int length){
 }
 
 double testing_convergence(int nums[], int length, int num_runs){
-  double passing = 0.0, failing = 0.0;
+  double non_positive_FAILING = 0.0;
   for (int i = 0 ; i < num_runs ; i++){
-    failing += generate_correct_fisher_loop(nums, length);
-    passing++;
+    non_positive_FAILING += generate_correct_fisher_loop(nums, length);
   }
-  return (double)passing / failing; 
+
+  cout << "List of length " << length << " and " << num_runs << " runs  has ";
+  cout << non_positive_FAILING << " failing lists." << endl;
+  
+  return (double)num_runs/non_positive_FAILING; 
 }
 
