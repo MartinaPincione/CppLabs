@@ -34,7 +34,7 @@ int generate_correct_fisher_loop(int nums[], int length){
   } while(!non_negative_sum(nums, length));
   return failed;
 }
-
+ 
 double testing_convergence(int nums[], int length, int num_runs){
   double non_positive_FAILING = 0.0;
   for (int i = 0 ; i < num_runs ; i++){
@@ -43,6 +43,8 @@ double testing_convergence(int nums[], int length, int num_runs){
 
   cout << "List of length " << length << " and " << num_runs << " runs  has ";
   cout << non_positive_FAILING << " failing lists." << endl;
+
+  cout << "Percentage of " << num_runs/non_positive_FAILING << endl;
   
   return (double)num_runs/non_positive_FAILING; 
 }
