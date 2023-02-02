@@ -25,27 +25,24 @@ void fisher_swap(int array[], int length){
     array[j] = temp;
   }
 }
-
-int generate_correct_fisher_loop(int nums[], int length){
-  int failed = 0;
-  do{
-    fisher_swap(nums, length);
-    failed++;
-  } while(!non_negative_sum(nums, length));
-  return failed;
-}
  
 double testing_convergence(int nums[], int length, int num_runs){
-  double non_positive_FAILING = 0.0;
-  for (int i = 0 ; i < num_runs ; i++){
-    non_positive_FAILING += generate_correct_fisher_loop(nums, length);
+  int failing = 0, passing = 0;
+  for (int i =0 ; i < num_runs; i++){
+    fisher_swap(nums, length);
+    if (non_negative_sum(nums, length)){
+      passing++;
+    }
+    else{
+      failing++;
+    }
   }
-
   cout << "List of length " << length << " and " << num_runs << " runs  has ";
-  cout << non_positive_FAILING << " failing lists." << endl;
+  cout << passing << " passing lists and ";
+  cout << failing << " failing lists." << endl;
 
-  cout << "Percentage of " << num_runs/non_positive_FAILING << endl;
+  cout << "Passing: Failing of " << (double)passing/failing << endl;
   
-  return (double)num_runs/non_positive_FAILING; 
+  return (double)passing/failing; 
 }
 
