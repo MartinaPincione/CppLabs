@@ -70,17 +70,19 @@ void print_array(int* arr, int length){
 
 int*  parenthesis(int n){
   int new_size = (2 * n)+1;
-  int *arr = new int(new_size);
+  int *arr = new int[new_size];
+  
   for(int i = 0; i < new_size; i++){
     arr[i] = i;
   }
+  
   fill_with_ones(arr, new_size);
   fisher_swap(arr, new_size);
 
   while(arr[0] != 1){ //while array doesn't start with 1
     fisher_swap(arr, new_size);
   }
-  print_array(arr, new_size);
+  //print_array(arr, new_size);
 
   int lowest_index = lowest_valley_index(arr, new_size);
   //dropping last -1
@@ -90,7 +92,7 @@ int*  parenthesis(int n){
   //cout << "p2 starting is " << p2_starting << endl;
   int final_arr_size = 2 * n;
   //cout << "Allocating array size of " << final_arr_size  << endl;
-  int new_arr[final_arr_size];
+  int *new_arr = new int[final_arr_size];
   int cur_new_arr = 0;
 
   //fill with p2
@@ -106,13 +108,14 @@ int*  parenthesis(int n){
     new_arr[cur_new_arr] = arr[i];
     cur_new_arr++;
   }
+  //cout << sizeof(arr)/sizeof(arr[0]) << endl;
 
-  print_array(new_arr, final_arr_size);
-  print_array(arr, sizeof(arr)/sizeof(arr[0]));
+  //print_array(new_arr, final_arr_size);
+  //print_array(arr, sizeof(arr)/sizeof(arr[0]));
 
-  cout << "freeing array size of " << sizeof(arr)/sizeof(arr[0]) << endl;
-  cout << "returning array size of " <<  sizeof(new_arr)/sizeof(new_arr[0]) << endl;
-  free(arr);
+  //cout << "freeing array size of " << sizeof(arr)/sizeof(arr[0]) << endl;
+  //cout << "returning array size of " <<  sizeof(new_arr)/sizeof(new_arr[0]) << endl;
+  delete[] arr;
 
   return new_arr;
   
