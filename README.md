@@ -6,3 +6,6 @@ run lab 2: ./UnitTest
 
 compiling lab 3: g++ UnitTest.cpp scramble.cpp doctest.h scramble.h prefix_sum.cpp -o UnitTest
 run lab 3: ./UnitTest
+
+compiling lab4: g++ doctest.h linked_list.cpp linked_list.h UnitTest.cpp -o UnitTest
+run lab4: ./UnitTest
