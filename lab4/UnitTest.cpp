@@ -4,6 +4,9 @@
 #include "linked_list.h"
 using namespace std;
 
+struct helper * help;
+struct helper * help_2;
+
 
 struct node * linked_list_1 = build_linked_list(0);
 
@@ -64,16 +67,23 @@ TEST_CASE("Testing deleting linked list") {
 TEST_CASE("Testing changing pointers"){
   const int T1 = 10;
   struct node * l1 = build_linked_list(T1);
-  change_pointers(l1, T1);
+  help = change_pointers(l1, T1);
   CHECK ( l1->next->number == 9);
-  //CHECK( delete_linked_list(l1, T1) == T1);
-  delete[] l1;
+  int check_1 = help->reference->next->number;
+  int check_2 = l1->next->number;
+  CHECK ( help->reference->next->number == l1->next->number);
 
   const int T2 = 5;
   struct node * l2 = build_linked_list(T2);
-  change_pointers(l2, T2);
-  CHECK( l2->next->number == 4);
-  delete[] l2;
- 
+  help_2 = change_pointers(l2, T2);
+  CHECK (l2->next->number == 4);
+  CHECK ( help_2->reference->next->number == l2->next->number);
+
+}
+
+TEST_CASE("testing freeing list with help struct"){
+
+  delete_helper(help);
+  delete_helper(help_2);
 
 }

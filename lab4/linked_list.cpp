@@ -20,7 +20,7 @@ struct node * build_linked_list(int elements){
         }
         prev=newNode;
     }
-    cout << list_head->next->number << endl;
+    //cout << list_head->next->number << endl;
     return list_head;
 }
 
@@ -62,7 +62,11 @@ int sum_values_in_linked_list(struct node * list, int elements){
 }
 
 
-void change_pointers(struct node * head, int elements){
+struct helper * change_pointers(struct node * head, int elements){
+
+  struct helper * help;
+  struct helper * prev_helper = NULL;
+
   struct node * cur = head;
   struct node * last;
   int position = 0;
@@ -77,15 +81,45 @@ void change_pointers(struct node * head, int elements){
   position = 0;
   cur = head;
   while(position < elements){
+    if (prev_helper == NULL){
+      help = new helper;
+      help->reference = cur;
+      help->next_helper = NULL;
+      prev_helper = help;
+    } 
+    else {
+      struct helper * temp_helper = new helper;
+      temp_helper->reference = cur;
+      temp_helper->next_helper = NULL;
+      prev_helper->next_helper = temp_helper;
+      prev_helper = temp_helper;
+    }
+    
     //create a temporary node that stores the next node
     struct node * temp = cur->next;
     
     cur->next = last;
-    cout << "current node: " << cur->number << " pointing to last node: " << cur->next->number  << endl;
+    //cout << "current node: " << cur->number << " pointing to last node: " << cur->next->number  << endl;
     cur = temp;
     position++;
 
   }
 
-  
+  return help;
+}
+
+
+
+void delete_helper(struct helper * help){
+
+  while(help->next_helper != NULL){
+    free(help->reference);
+    struct helper * temp = help;
+    help = help->next_helper;
+    free(temp);
+  }
+
+  free(help->reference);
+  free(help);
+
 }
