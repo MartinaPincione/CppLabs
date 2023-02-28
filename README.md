@@ -9,3 +9,6 @@ run lab 3: ./UnitTest
 
 compiling lab4: g++ doctest.h linked_list.cpp linked_list.h UnitTest.cpp -o UnitTest
 run lab4: ./UnitTest
+
+compiling lab5: g++ cosine.h cosine.cpp UnitTest.cpp -o UnitTest
+run lab5: ./UnitTest
