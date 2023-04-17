@@ -115,6 +115,21 @@ TEST_CASE("matrix normalize and divide by two"){
 
     SUBCASE("matrix 2"){
 
+        for(int i = 0 ; i < m2.size(); i++){
+            for(int j = 0; j < m2[0].size(); j++){
+                cout << m2[i][j]<< " ";
+            }
+            cout << endl;
+        }
+
+
+        normalize_and_divide_by2(m2);
+        for(int i = 0 ; i < m2.size(); i++){
+            for(int j = 0; j < m2[1].size(); j++){
+                CHECK(m2[i][j] == 0);
+            }
+        }
+
     };
 }
 
@@ -128,4 +143,14 @@ TEST_CASE("matrix compute reachability"){
             }
         }
     };
+
+    SUBCASE("matrix 2"){
+        vector<vector<int>> result_m2 = compute_reachability(copy2);
+        for(int i = 0 ; i < result_m2.size(); i++){
+            for(int j = 0; j < result_m2[1].size(); j++){
+                CHECK(result_m2[i][j] == 0);
+            }
+        }
+    };
+
 }
