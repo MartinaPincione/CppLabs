@@ -31,39 +31,44 @@ vector<vector<int>> read_matrix(string filename){
 }
 
 vector<vector<int>> matrix_multiply(const vector<vector<int>>& A, const vector<vector<int>>& B) {
-    int n = A.size();
-    vector<vector<int>> result(n, vector<int>(n, 0));
-
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            for (int k = 0; k < n; k++) {
-                result[i][j] += A[i][k] * B[k][j];
+    
+    try {
+        int n = A.size();
+        vector<vector<int>> result(n, vector<int>(n, 0));
+        if (A[0].size() != B.size()) throw int(0);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                for (int k = 0; k < n; k++) {
+                    result[i][j] += A[i][k] * B[k][j];
+                }
             }
         }
-    }
-
-    return result;
+        return result;
+    } catch (int i){
+        cout << "matrix were not compatible for multiplication" << endl;
+        return {};
+    }    
 }
 
 
-void remove_edges(vector<vector<int>>& matrix) {
-    int n = matrix.size();
+void remove_edges(vector<vector<int>>& m) {
+    int n = m.size();
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            if (matrix[i][j] != 0 && abs(matrix[i][j]) != 1) {
-                matrix[i][j] = 0;
+            if (abs(m[i][j]) == 1) {
+                m[i][j] = 0;
             }
         }
     }
 }
 
-vector<vector<int>> get_zero_edges(const vector<vector<int>>& matrix) {
-    int n = matrix.size();
+vector<vector<int>> get_zero_edges(const vector<vector<int>>& m) {
+    int n = m.size();
     vector<vector<int>> zeroEdges(n, vector<int>(n, 0));
 
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            if (matrix[i][j] == 0) {
+            if (m[i][j] == 0) {
                 zeroEdges[i][j] = 1;
             }
         }
@@ -72,29 +77,27 @@ vector<vector<int>> get_zero_edges(const vector<vector<int>>& matrix) {
     return zeroEdges;
 }
 
-void normalize_and_divide_by2(vector<vector<int>>& matrix) {
-    int n = matrix.size();
+void normalize_and_divide_by2(vector<vector<int>>& m) {
+    int n = m.size();
+    int x = m[0].size();
+    int rowSum;
     for (int i = 0; i < n; i++) {
-        int countPlus1 = 0;
-        int countMinus1 = 0;
-        for (int j = 0; j < n; j++) {
-            if (matrix[i][j] == 1) {
-                countPlus1++;
-            } else if (matrix[i][j] == -1) {
-                countMinus1++;
+        rowSum = 0;
+        for (int j = 0; j < x; j++) {
+            rowSum += m[i][j];
+        }
+        if (rowSum > 0) {
+            for (int j = 0; j < x; j++) {
+                m[i][j] /= (2 * rowSum);
             }
         }
-        for (int j = 0; j < n; j++) {
-            if (matrix[i][j] == 1) {
-                matrix[i][j] = countPlus1 > countMinus1 ? 1 : 0;
-            } else if (matrix[i][j] == -1) {
-                matrix[i][j] = countMinus1 > countPlus1 ? -1 : 0;
-            }
-            if (matrix[i][j] != 0) {
-                matrix[i][j] /= 2;
+        if (rowSum == 0) {
+            for (int j = 0; j < x; j++) {
+                m[i][j] = 0;
             }
         }
     }
+    
 }
 
 vector<vector<int>> compute_reachability(const vector<vector<int>>& graph) {
