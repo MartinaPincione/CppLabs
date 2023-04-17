@@ -12,3 +12,6 @@ run lab4: ./UnitTest
 
 compiling lab5: g++ cosine.h cosine.cpp UnitTest.cpp -o UnitTest
 run lab5: ./UnitTest
+
+compiling lab9: g++ UnitTest.cpp graph.cpp graph.h -o UnitTest
+run lab 9: ./UnitTest
